@@ -16,6 +16,7 @@ import {
     KeyboardDatePicker,
 } from "@material-ui/pickers";
 import { differenceInDays, parse, addDays, format } from "date-fns";
+import { TextField } from "@material-ui/core";
 
 function Copyright() {
     return (
@@ -50,6 +51,7 @@ export default function App() {
     const classes = useStyles();
 
     // Set component level state
+    const [patientName, setPatientName] = useState("");
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedDate2, setSelectedDate2] = useState(null);
     const [checked, setChecked] = useState(false);
@@ -203,18 +205,30 @@ export default function App() {
                 >
                     Ontario COVID-19 Isolation End Date and POC Calculator
                 </Typography>
-                <form
-                    className={classes.form}
-                    noValidate
-                    onSubmit={handleSubmit}
-                >
+                <form className={classes.form} onSubmit={handleSubmit}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        {/* Patient Name Field */}
+                        <Grid
+                            className="textfield"
+                            container
+                            justify="space-around"
+                            onChange={(e) => {
+                                setPatientName(e.target.value);
+                            }}
+                        >
+                            <TextField
+                                id="standard-basic"
+                                label="Patient Name:"
+                                required
+                            />
+                        </Grid>
                         <Grid container justify="space-around">
                             <KeyboardDatePicker
                                 margin="normal"
                                 id="date-picker-dialog"
                                 label="Lab Collection Date"
                                 format="dd MMM yyyy"
+                                required
                                 value={selectedDate}
                                 onChange={handleDateChange}
                                 onInput={(e) => setSelectedDate(e.target.value)}
@@ -237,6 +251,7 @@ export default function App() {
                                 id="date-picker-dialog2"
                                 label="Symptom Onset Date"
                                 format="dd MMM yyyy"
+                                required
                                 value={selectedDate2}
                                 onChange={handleDateChange2}
                                 onInput={(e) =>
@@ -254,6 +269,7 @@ export default function App() {
                                 refuse={/[^\.\ \,\[a-zA-Z0-9_]*$]+/gi}
                             />
                         </Grid>
+
                         <Grid className="checkboxlabel">
                             <Checkbox
                                 checked={checked}
