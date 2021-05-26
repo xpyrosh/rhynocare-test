@@ -33,20 +33,36 @@ app.post("/signup", (req, res) => {
         userName: req.body.userName,
     };
 
-    // send create request to firebase
-    firebase
-        .auth()
-        .createUserWithEmailAndPassword(newUser.email, newUser.password)
+    // attempt to fetch a user from the DB with the matching name
+    db.doc(`/users/${newUser.userName}`)
+        .get()
+        .then((doc) => {
+            // if we did receive one from the DB that means it already exists
+            if (doc.exists) {
+                return res
+                    .status(400)
+                    .json({ userName: "This username is in use." });
+            } else {
+                // if we didn't receive one we then create this user
+                return firebase
+                    .auth()
+                    .createUserWithEmailAndPassword(
+                        newUser.email,
+                        newUser.password
+                    );
+            }
+        })
+        // return the user idtoken received from creation
         .then((data) => {
-            // if created successfully we get a promise with the new users data
-            return res
-                .status(201)
-                .json({ message: `${data.user.uid} signed up successfully` });
+            return data.user.getIdToken();
+        })
+        .then((token) => {
+            return res.status(201).json({ token });
         })
         // catch if creation failed
         .catch((err) => {
             console.error(err);
-            return res.status(500).error({ error: err.code });
+            return res.status(500).json({ error: err.code });
         });
 });
 
