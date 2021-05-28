@@ -26,7 +26,16 @@ app.get("/submissions", (req, res) => {
         .then((data) => {
             let submissions = [];
             data.forEach((doc) => {
-                submissions.push(doc.data());
+                submissions.push({
+                    submissionId: doc.id,
+                    patientName: doc.data().patientName,
+                    onsetDate: doc.data().onsetDate,
+                    immuno: doc.data().immuno,
+                    highrisk: doc.data().highrisk,
+                    symptoms: doc.data().symptoms,
+                    collectionDate: doc.data().collectionDate,
+                    createdAt: doc.data().createdAt,
+                });
             });
 
             return res.json(submissions);

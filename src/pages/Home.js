@@ -85,6 +85,10 @@ const Home = () => {
 
     // Submit Button Handler
     function handleSubmit(event) {
+        // check data
+        console.log(
+            `${selectedDate} ${selectedDate2} ${patientName} ${checked} ${checked2} ${checked3}`
+        );
         event.preventDefault();
         console.log(selectedDate, selectedDate2);
         var dubdays = differenceInDays(selectedDate, selectedDate2);
