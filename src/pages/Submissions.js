@@ -6,6 +6,7 @@ const Submissions = () => {
     const [state, setState] = useState({ submissions: null });
 
     useEffect(() => {
+        // axios promise happens asynchronously therefore using data can return undefined... check truthiness before use
         axios
             .get("/submissions")
             .then((res) => {

@@ -22,6 +22,8 @@ firebase.initializeApp(config);
 ///////////////////////////////////////// SUBMISSIONS //////////////////////////////////////
 app.get("/submissions", (req, res) => {
     db.collection("submissions")
+        .orderBy("createdAt", "desc")
+        .limit(5)
         .get()
         .then((data) => {
             let submissions = [];
