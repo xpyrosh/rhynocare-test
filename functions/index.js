@@ -19,7 +19,7 @@ firebase.initializeApp(config);
 // so we can replace admin.firestore() with db
 const db = admin.firestore();
 
-///////////////////////////////////////// DATA SUBMISSION //////////////////////////////////////
+///////////////////////////////////////// SUBMISSIONS //////////////////////////////////////
 app.get("/submissions", (req, res) => {
     db.collection("submissions")
         .get()
@@ -30,6 +30,30 @@ app.get("/submissions", (req, res) => {
             });
 
             return res.json(submissions);
+        })
+        .catch((err) => {
+            console.error(err);
+            return res.status(500).json({ error: err.code });
+        });
+});
+
+app.post("/submissions", (req, res) => {
+    const newSubmission = {
+        patientName: req.body.patientName,
+        highrisk: req.body.highrisk,
+        immuno: req.body.immuno,
+        symptoms: req.body.symptoms,
+        collectionDate: req.body.collectionDate,
+        onsetDate: req.body.onsetDate,
+        createdAt: new Date().toISOString(),
+    };
+
+    admin
+        .firestore()
+        .collection("submissions")
+        .add(newSubmission)
+        .then((doc) => {
+            res.json({ message: `Document ${doc.id} has been created.` });
         })
         .catch((err) => {
             console.error(err);
