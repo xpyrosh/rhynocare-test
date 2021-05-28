@@ -23,7 +23,7 @@ const Submissions = () => {
 
     return (
         <div style={{ paddingTop: "3rem" }}>
-            <h1>Submissions</h1>
+            <h1>Recent Submissions</h1>
 
             {/* Displaying each patient submission using component card */}
             {state.submissions &&
