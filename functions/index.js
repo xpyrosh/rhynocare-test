@@ -19,6 +19,25 @@ firebase.initializeApp(config);
 // so we can replace admin.firestore() with db
 const db = admin.firestore();
 
+///////////////////////////////////////// DATA SUBMISSION //////////////////////////////////////
+app.get("/submissions", (req, res) => {
+    db.collection("submissions")
+        .get()
+        .then((data) => {
+            let submissions = [];
+            data.forEach((doc) => {
+                submissions.push(doc.data());
+            });
+
+            return res.json(submissions);
+        })
+        .catch((err) => {
+            console.error(err);
+            return res.status(500).json({ error: err.code });
+        });
+});
+
+///////////////////////////////////////// USER AUTH ////////////////////////////////////////////
 // LOG IN
 app.post("/login", (req, res) => {
     const user = {
