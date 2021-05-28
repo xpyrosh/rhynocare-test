@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Submission from "../components/Submission";
 
 const Submissions = () => {
-    const [state, setState] = useState([]);
+    const [state, setState] = useState({ submissions: null });
 
     useEffect(() => {
         axios
@@ -23,17 +24,18 @@ const Submissions = () => {
         <div style={{ paddingTop: "3rem" }}>
             <h1>Submissions</h1>
 
-            <p>{JSON.stringify(state)}</p>
-            <p>{JSON.stringify(state.submissions)}</p>
-            <br />
-            {state.submissions && <h3>{state.submissions[0].patientName}</h3>}
-            <br />
-            {console.log(typeof state.submissions)}
-
+            {/* Displaying each patient submission using component card */}
             {state.submissions &&
-                state.submissions.forEach((element) => {
-                    <p>{element.patientName}</p>;
+                state.submissions.map((element, i) => {
+                    console.log(element);
+                    return <Submission patient={element} />;
                 })}
+            <br />
+
+            {/* Displaying RAW data */}
+            <h4>RAW JSON RESPONSE DATA:</h4>
+            <p>{JSON.stringify(state)}</p>
+            {/* <p>{JSON.stringify(state.submissions)}</p> */}
         </div>
     );
 };
