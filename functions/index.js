@@ -6,6 +6,9 @@ const admin = require("firebase-admin");
 // .firebaserc already knows which project so we don't need to pass one
 admin.initializeApp();
 
+// so we can replace admin.firestore() with db
+const db = admin.firestore();
+
 // Express server to use routes
 const express = require("express");
 const app = express();
@@ -15,9 +18,6 @@ const config = require("./Firestore");
 
 const firebase = require("firebase");
 firebase.initializeApp(config);
-
-// so we can replace admin.firestore() with db
-const db = admin.firestore();
 
 ///////////////////////////////////////// SUBMISSIONS //////////////////////////////////////
 app.get("/submissions", (req, res) => {
