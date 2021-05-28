@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FormControl from "@material-ui/core/FormControl";
 
 const Submission = ({ patient }) => {
+    const createdAt = new Date(patient.createdAt);
     const [patientName, setPatientName] = useState(patient.patientName);
     const [collectionDate, setCollectionDate] = useState(
         patient.collectionDate
@@ -10,7 +11,6 @@ const Submission = ({ patient }) => {
     const [symptoms, setSymptoms] = useState(patient.symptoms);
     const [highRisk, setHighRisk] = useState(patient.highRisk);
     const [immuno, setImmuno] = useState(patient.immuno);
-    const [createdAt, setCreatedAt] = useState(patient.createdAt);
 
     return (
         <div>
@@ -57,7 +57,7 @@ const Submission = ({ patient }) => {
                     type="text"
                     id="collectionDate"
                     name="collectionDate"
-                    value={collectionDate}
+                    value={new Date(collectionDate).toDateString()}
                     required
                     onChange={(e) => setCollectionDate(e.target.value)}
                     style={{
@@ -76,7 +76,7 @@ const Submission = ({ patient }) => {
                     type="text"
                     id="onsetDate"
                     name="onsetDate"
-                    value={onsetDate}
+                    value={new Date(onsetDate).toDateString()}
                     required
                     onChange={(e) => setOnsetDate(e.target.value)}
                     style={{
@@ -152,6 +152,13 @@ const Submission = ({ patient }) => {
                         onFocus={{ outline: "none" }}
                     />{" "}
                     <span>Immunocompromised</span>
+                </div>
+                <br />
+                <div>
+                    <span>Created:</span>
+                    <span style={{ fontWeight: "bold", paddingLeft: ".5rem" }}>
+                        {createdAt.toDateString()}
+                    </span>
                 </div>
             </form>
         </div>

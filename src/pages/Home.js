@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+// axios
+import axios from "axios";
+
 // Material Imports
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -196,6 +199,24 @@ const Home = () => {
                     format(addDays(selectedDate, -2), "dd MMM yyyy")
             );
         }
+
+        const submission = {
+            patientName: patientName,
+            onsetDate: selectedDate,
+            collectionDate: selectedDate2,
+            symptoms: checked,
+            highrisk: checked2,
+            immuno: checked3,
+        };
+
+        axios
+            .post("/submissions", submission)
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     }
 
     return (
