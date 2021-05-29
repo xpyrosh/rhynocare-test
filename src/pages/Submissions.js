@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 
 // Redux Imports
 import { connect } from "react-redux";
@@ -27,7 +27,7 @@ const Submissions = ({
     }
 
     return (
-        <>
+        <Fragment>
             {authenticated ? (
                 <div style={{ paddingTop: "3rem" }}>
                     <h1>Recent Submissions</h1>
@@ -61,7 +61,7 @@ const Submissions = ({
             ) : (
                 <Redirect to="/login" />
             )}
-        </>
+        </Fragment>
     );
 };
 

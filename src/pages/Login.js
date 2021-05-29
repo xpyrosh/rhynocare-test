@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Redirect } from "react-router-dom";
 
 // Redux Imports
@@ -73,7 +73,7 @@ const Login = ({ auth: { loading, authenticated }, login }) => {
     };
 
     return (
-        <>
+        <Fragment>
             {!authenticated ? (
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
@@ -133,7 +133,7 @@ const Login = ({ auth: { loading, authenticated }, login }) => {
             ) : (
                 <Redirect to="/" />
             )}
-        </>
+        </Fragment>
     );
 };
 

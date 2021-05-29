@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 
 // Redux Imports
 import { connect } from "react-redux";
@@ -220,7 +220,7 @@ const Home = ({
     }
 
     return (
-        <>
+        <Fragment>
             {authenticated ? (
                 <Container
                     component="main"
@@ -373,7 +373,7 @@ const Home = ({
             ) : (
                 <Redirect to="/login" />
             )}
-        </>
+        </Fragment>
     );
 };
 
