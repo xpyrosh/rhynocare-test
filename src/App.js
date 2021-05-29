@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { Provider } from "react-redux";
-// import store from "./store";
+import store from "./store";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -12,7 +12,7 @@ import Navbar from "./components/Navbar";
 
 export default function App() {
     return (
-        <Provider>
+        <Provider store={store}>
             <Router>
                 <div className="App">
                     <Navbar />
