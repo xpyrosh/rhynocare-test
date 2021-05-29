@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 // Redux Imports
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { signup } from "../actions/authActions";
 
 // Material Imports

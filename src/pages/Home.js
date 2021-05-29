@@ -20,7 +20,7 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from "@material-ui/pickers";
-import { differenceInDays, parse, addDays, format } from "date-fns";
+import { differenceInDays, addDays, format } from "date-fns";
 import { TextField } from "@material-ui/core";
 import { Redirect } from "react-router";
 
@@ -270,13 +270,13 @@ const Home = ({
                                             "aria-label": "change date",
                                         }}
                                         // Attempted use of ReGex?
-                                        rifmFormatter={(val) =>
-                                            val.replace(
-                                                /[^\.\ \,\[a-zA-Z0-9_]*$]+/gi,
-                                                ""
-                                            )
-                                        }
-                                        refuse={/[^\.\ \,\[a-zA-Z0-9_]*$]+/gi}
+                                        // rifmFormatter={(val) =>
+                                        //     val.replace(
+                                        //         /[^\.\ \,\[a-zA-Z0-9_]*$]+/gi,
+                                        //         ""
+                                        //     )
+                                        // }
+                                        // refuse={/[^\.\ \,\[a-zA-Z0-9_]*$]+/gi}
                                     />
                                 </Grid>
                                 <Grid container justify="space-around">
@@ -294,13 +294,13 @@ const Home = ({
                                         KeyboardButtonProps={{
                                             "aria-label": "change date",
                                         }}
-                                        rifmFormatter={(val) =>
-                                            val.replace(
-                                                /[^\.\ \,\[a-zA-Z0-9_]*$]+/gi,
-                                                ""
-                                            )
-                                        }
-                                        refuse={/[^\.\ \,\[a-zA-Z0-9_]*$]+/gi}
+                                        // rifmFormatter={(val) =>
+                                        //     val.replace(
+                                        //         /[^\.\ \,\[a-zA-Z0-9_]*$]+/gi,
+                                        //         ""
+                                        //     )
+                                        // }
+                                        // refuse={/[^\.\ \,\[a-zA-Z0-9_]*$]+/gi}
                                     />
                                 </Grid>
 

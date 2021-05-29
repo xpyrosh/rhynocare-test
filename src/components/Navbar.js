@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-import Link from "react-router-dom/Link";
+import React from "react";
+import { Link } from "react-router-dom";
 
 // Redux Imports
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { logout } from "../actions/authActions";
 
 // Material imports

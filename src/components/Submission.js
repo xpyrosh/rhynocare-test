@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import FormControl from "@material-ui/core/FormControl";
 
 const Submission = ({ patient }) => {
     const createdAt = new Date(patient.createdAt);
