@@ -1,19 +1,16 @@
 import { LOG_IN, LOG_OUT, SIGN_UP, SET_LOADING } from "./types";
 
+import axios from "axios";
+
 // login action
 export const login = (credentials) => async (dispatch) => {
     try {
         setLoading();
 
-        return axios
+        return await axios
             .post("/login", credentials)
             .then((res) => {
-                console.log(res.data);
-
-                dispatch({
-                    type: LOG_IN,
-                    payload: res.data,
-                });
+                return res.data;
             })
             .catch((err) => {
                 console.error(err);
@@ -40,8 +37,9 @@ export const logout = () => async (dispatch) => {
 export const signup = (credentials) => async (dispatch) => {
     const { password, confirmPassword } = credentials;
 
+    // add some validation in front end.. didn't validate in the cloud functions yet
     if (password !== confirmPassword) {
-        return res.status(401).json({ message: "Unauthorized." });
+        return { message: "Unauthorized." };
     }
 
     try {

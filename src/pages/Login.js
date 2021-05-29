@@ -1,5 +1,10 @@
 import React from "react";
 
+// Redux Imports
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { login } from "../actions/authActions";
+
 // Material Imports
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -44,61 +49,81 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = () => {
+const Login = ({ auth: { loading, authenticated } }) => {
     const classes = useStyles();
 
+    if (loading) {
+        return <h1>Loading...</h1>;
+    }
+
     return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}></Avatar>
-                <Typography component="h1" variant="h5">
-                    Login
-                </Typography>
-                <form className={classes.form} noValidate>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                    />
+        <>
+            {!authenticated ? (
+                <Container component="main" maxWidth="xs">
+                    <CssBaseline />
+                    <div className={classes.paper}>
+                        <Avatar className={classes.avatar}></Avatar>
+                        <Typography component="h1" variant="h5">
+                            Login
+                        </Typography>
+                        <form className={classes.form} noValidate>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                                autoFocus
+                            />
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                            />
 
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Sign In
-                    </Button>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                            >
+                                Sign In
+                            </Button>
 
-                    <Link href="/signup" variant="body2">
-                        {"Don't have an account? Sign Up"}
-                    </Link>
-                </form>
-            </div>
-            <Box mt={8}>
-                <Copyright />
-            </Box>
-        </Container>
+                            <Link href="/signup" variant="body2">
+                                {"Don't have an account? Sign Up"}
+                            </Link>
+                        </form>
+                    </div>
+                    <Box mt={8}>
+                        <Copyright />
+                    </Box>
+                </Container>
+            ) : (
+                <h1>Logged In.</h1>
+            )}
+        </>
     );
 };
 
-export default Login;
+Login.propTypes = {
+    login: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+    // first log is the name and can be any variable
+    // second log (state.log) refers to the name given in rootReducer
+    auth: state.auth,
+});
+
+export default connect(mapStateToProps, { login })(Login);
