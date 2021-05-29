@@ -50,13 +50,17 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SignUp = ({ auth: { authenticated }, signup }) => {
+const SignUp = ({ auth: { loading, authenticated }, signup }) => {
     const classes = useStyles();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [userName, setUserName] = useState("");
+
+    if (loading) {
+        return <h1>Loading...</h1>;
+    }
 
     const fbSignUp = (e) => {
         e.preventDefault();

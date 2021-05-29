@@ -40,13 +40,23 @@ export const logout = () => async (dispatch) => {
 // sign up new user action
 export const signup = (credentials) => async (dispatch) => {
     console.log(credentials);
+
+    const newCreds = {
+        email: credentials.email,
+        password: credentials.password,
+        confirmPassword: credentials.confirmPassword,
+        userName: credentials.userName,
+    };
+    console.log(newCreds);
+
+    console.log("we got to the start");
     try {
         setLoading();
 
-        return axios
-            .post("/signup", credentials)
+        return await axios
+            .post("/signup", newCreds)
             .then((res) => {
-                console.log(res.data);
+                console.log("WE GOT TO THE THEN");
 
                 dispatch({
                     type: SIGN_UP,

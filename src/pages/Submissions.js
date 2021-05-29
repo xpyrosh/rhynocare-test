@@ -7,9 +7,11 @@ import { getSubmissions } from "../actions/submissionActions";
 
 // Component Import
 import Submission from "../components/Submission";
+import { Redirect } from "react-router";
 
 const Submissions = ({
     submission: { submissions, loading },
+    auth: { authenticated },
     getSubmissions,
 }) => {
     // const [state, setState] = useState({ submissions: null });
@@ -25,32 +27,41 @@ const Submissions = ({
     }
 
     return (
-        <div style={{ paddingTop: "3rem" }}>
-            <h1>Recent Submissions</h1>
+        <>
+            {authenticated ? (
+                <div style={{ paddingTop: "3rem" }}>
+                    <h1>Recent Submissions</h1>
 
-            {/* Displaying each patient submission using component card */}
-            {/* {state.submissions &&
+                    {/* Displaying each patient submission using component card */}
+                    {/* {state.submissions &&
                 state.submissions.map((element, i) => {
                     console.log(element);
                     return <Submission patient={element} />;
                 })} */}
 
-            {/* Using REDUX: */}
-            {!loading && submissions.length === 0 ? (
-                <p>No submissions...</p>
+                    {/* Using REDUX: */}
+                    {!loading && submissions.length === 0 ? (
+                        <p>No submissions...</p>
+                    ) : (
+                        submissions.map((element, key) => (
+                            <Submission
+                                patient={element}
+                                key={element.submissionId}
+                            />
+                        ))
+                    )}
+
+                    <br />
+
+                    {/* Displaying RAW data */}
+                    <h4>RAW JSON RESPONSE DATA:</h4>
+                    <p>{JSON.stringify(submissions)}</p>
+                    {/* <p>{JSON.stringify(state.submissions)}</p> */}
+                </div>
             ) : (
-                submissions.map((element, key) => (
-                    <Submission patient={element} key={element.submissionId} />
-                ))
+                <Redirect to="/login" />
             )}
-
-            <br />
-
-            {/* Displaying RAW data */}
-            <h4>RAW JSON RESPONSE DATA:</h4>
-            <p>{JSON.stringify(submissions)}</p>
-            {/* <p>{JSON.stringify(state.submissions)}</p> */}
-        </div>
+        </>
     );
 };
 
@@ -62,6 +73,7 @@ const mapStateToProps = (state) => ({
     // first log is the name and can be any variable
     // second log (state.log) refers to the name given in rootReducer
     submission: state.submission,
+    auth: state.auth,
 });
 
 export default connect(mapStateToProps, { getSubmissions })(Submissions);
