@@ -32,7 +32,7 @@ export const addSubmission = (submission) => async (dispatch) => {
         return axios
             .post("/submissions", submission)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 dispatch({
                     type: SUBMIT,
                     payload: res.data,

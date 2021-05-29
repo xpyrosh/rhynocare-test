@@ -10,7 +10,11 @@ export const login = (credentials) => async (dispatch) => {
         return await axios
             .post("/login", credentials)
             .then((res) => {
-                return res.data;
+                // console.log(res.data);
+                dispatch({
+                    type: LOG_IN,
+                    payload: res.data,
+                });
             })
             .catch((err) => {
                 console.error(err);

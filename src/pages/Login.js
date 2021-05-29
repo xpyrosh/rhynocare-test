@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 
 // Redux Imports
 import { connect } from "react-redux";
@@ -49,12 +50,27 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = ({ auth: { loading, authenticated } }) => {
+const Login = ({ auth: { loading, authenticated }, login }) => {
     const classes = useStyles();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     if (loading) {
         return <h1>Loading...</h1>;
     }
+
+    const validateLogin = (e) => {
+        e.preventDefault();
+
+        const credentials = {
+            email: email,
+            password: password,
+        };
+
+        login(credentials);
+        if (authenticated) alert("Logged In.");
+    };
 
     return (
         <>
@@ -76,6 +92,8 @@ const Login = ({ auth: { loading, authenticated } }) => {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 autoFocus
                             />
                             <TextField
@@ -88,6 +106,8 @@ const Login = ({ auth: { loading, authenticated } }) => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
 
                             <Button
@@ -96,6 +116,7 @@ const Login = ({ auth: { loading, authenticated } }) => {
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
+                                onClick={validateLogin}
                             >
                                 Sign In
                             </Button>
@@ -110,7 +131,7 @@ const Login = ({ auth: { loading, authenticated } }) => {
                     </Box>
                 </Container>
             ) : (
-                <h1>Logged In.</h1>
+                <Redirect to="/" />
             )}
         </>
     );
