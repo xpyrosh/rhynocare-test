@@ -47,9 +47,7 @@ const Submission = ({ patient }) => {
                         borderRadius: "5px",
                         outline: "none",
                         border: "none",
-                        ":focus": { outline: "none" },
                     }}
-                    onFocus={{ outline: "none" }}
                 />
                 {/* Collection Date */}
                 <label htmlFor="name">Collection Date:</label>
@@ -66,9 +64,7 @@ const Submission = ({ patient }) => {
                         borderRadius: "5px",
                         outline: "none",
                         border: "none",
-                        ":focus": { outline: "none" },
                     }}
-                    onFocus={{ outline: "none" }}
                 />
                 {/* Onset Date */}
                 <label htmlFor="name">Onset Date:</label>
@@ -85,9 +81,7 @@ const Submission = ({ patient }) => {
                         borderRadius: "5px",
                         outline: "none",
                         border: "none",
-                        ":focus": { outline: "none" },
                     }}
-                    onFocus={{ outline: "none" }}
                 />
                 {/* Symptoms */}
                 <div>
@@ -104,10 +98,7 @@ const Submission = ({ patient }) => {
                             borderRadius: "5px",
                             outline: "none",
                             border: "none",
-
-                            ":focus": { outline: "none" },
                         }}
-                        onFocus={{ outline: "none" }}
                     />{" "}
                     <span>Symptoms Present</span>
                 </div>
@@ -126,9 +117,7 @@ const Submission = ({ patient }) => {
                             borderRadius: "5px",
                             outline: "none",
                             border: "none",
-                            ":focus": { outline: "none" },
                         }}
-                        onFocus={{ outline: "none" }}
                     />{" "}
                     <span>High Risk</span>
                 </div>
@@ -147,10 +136,8 @@ const Submission = ({ patient }) => {
                             borderRadius: "5px",
                             outline: "none",
                             border: "none",
-                            ":focus": { outline: "none" },
                         }}
-                        onFocus={{ outline: "none" }}
-                    />{" "}
+                    />
                     <span>Immunocompromised</span>
                 </div>
                 <br />

@@ -36,7 +36,9 @@ const Submissions = ({
             {!loading && submissions.length === 0 ? (
                 <p>No submissions...</p>
             ) : (
-                submissions.map((element) => <Submission patient={element} />)
+                submissions.map((element, key) => (
+                    <Submission patient={element} key={element.submissionId} />
+                ))
             )}
 
             <br />

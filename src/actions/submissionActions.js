@@ -5,19 +5,19 @@ export const getSubmissions = () => async (dispatch) => {
     try {
         setLoading();
 
-        const res = axios
+        return axios
             .get("/submissions")
             .then((res) => {
-                return res.data;
+                // console.log(res.data);
+
+                dispatch({
+                    type: GET_SUBMISSIONS,
+                    payload: res.data,
+                });
             })
             .catch((err) => {
                 console.error(err);
             });
-
-        dispatch({
-            type: GET_SUBMISSIONS,
-            payload: res,
-        });
     } catch (err) {
         console.error(err);
     }
