@@ -6,7 +6,7 @@ import store from "./store";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Signup from "./pages/SignUp";
+import Signup from "./pages/SignUp.js";
 import Submissions from "./pages/Submissions";
 import Navbar from "./components/Navbar";
 
