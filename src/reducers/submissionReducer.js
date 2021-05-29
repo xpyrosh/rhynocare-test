@@ -5,6 +5,7 @@ const initialState = {
     authenticated: false,
     loading: false,
     error: null,
+    message: null,
 };
 
 export default (state = initialState, action) => {
@@ -18,6 +19,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 submissions: action.payload,
+                loading: false,
+            };
+        case SUBMIT:
+            return {
+                ...state,
+                message: action.payload,
                 loading: false,
             };
         default:

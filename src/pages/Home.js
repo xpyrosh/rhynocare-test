@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 
-// axios
-import axios from "axios";
+// Redux Imports
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { addSubmission } from "../actions/submissionActions";
 
 // Material Imports
 import Button from "@material-ui/core/Button";
@@ -49,7 +51,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Home = () => {
+const Home = ({
+    submission: { loading, message, authenticated },
+    addSubmission,
+}) => {
     // Use custom CSS
     const classes = useStyles();
 
@@ -209,14 +214,7 @@ const Home = () => {
             immuno: checked3,
         };
 
-        axios
-            .post("/submissions", submission)
-            .then((res) => {
-                console.log(res.data);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+        addSubmission(submission);
     }
 
     return (
@@ -365,4 +363,14 @@ const Home = () => {
     );
 };
 
-export default Home;
+Home.propTypes = {
+    addSubmission: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+    // first log is the name and can be any variable
+    // second log (state.log) refers to the name given in rootReducer
+    submission: state.submission,
+});
+
+export default connect(mapStateToProps, { addSubmission })(Home);

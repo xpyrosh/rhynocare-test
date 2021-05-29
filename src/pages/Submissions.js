@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+
+// Redux Imports
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import Submission from "../components/Submission";
 import { getSubmissions } from "../actions/submissionActions";
+
+// Component Import
+import Submission from "../components/Submission";
 
 const Submissions = ({
     submission: { submissions, loading },
