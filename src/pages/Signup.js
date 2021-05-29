@@ -1,4 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+
+// Redux Imports
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { signup } from "../actions/authActions";
+
+// Material Imports
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -6,7 +13,6 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -44,8 +50,30 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SignUp = () => {
+const SignUp = ({ auth: { authenticated }, signup }) => {
     const classes = useStyles();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [userName, setUserName] = useState("");
+
+    const fbSignUp = (e) => {
+        e.preventDefault();
+
+        const credentials = {
+            email: email,
+            password: password,
+            confirmPassword: confirmPassword,
+            userName: userName,
+        };
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+        } else {
+            signup(credentials);
+        }
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -66,6 +94,8 @@ const SignUp = () => {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -78,6 +108,37 @@ const SignUp = () => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="confirmpassword"
+                                label="Confirm Password"
+                                type="password"
+                                id="confirmpassword"
+                                autoComplete="current-password"
+                                value={confirmPassword}
+                                onChange={(e) =>
+                                    setConfirmPassword(e.target.value)
+                                }
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="username"
+                                label="Username"
+                                type="text"
+                                id="username"
+                                value={userName}
+                                onChange={(e) => setUserName(e.target.value)}
                             />
                         </Grid>
                     </Grid>
@@ -87,6 +148,7 @@ const SignUp = () => {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={fbSignUp}
                     >
                         Sign Up
                     </Button>
@@ -103,4 +165,10 @@ const SignUp = () => {
     );
 };
 
-export default SignUp;
+const mapStateToProps = (state) => ({
+    // first log is the name and can be any variable
+    // second log (state.log) refers to the name given in rootReducer
+    auth: state.auth,
+});
+
+export default connect(mapStateToProps, { signup })(SignUp);

@@ -15,9 +15,11 @@ const Navbar = ({ auth: { authenticated }, logout }) => {
     return (
         <AppBar>
             <Toolbar>
-                <Button color="inherit" component={Link} to="/">
-                    Home
-                </Button>
+                {authenticated && (
+                    <Button color="inherit" component={Link} to="/">
+                        Home
+                    </Button>
+                )}
                 {!authenticated && (
                     <Button color="inherit" component={Link} to="/login">
                         Login
@@ -28,9 +30,11 @@ const Navbar = ({ auth: { authenticated }, logout }) => {
                         Sign Up
                     </Button>
                 )}
-                <Button color="inherit" component={Link} to="/submissions">
-                    Submissions
-                </Button>
+                {authenticated && (
+                    <Button color="inherit" component={Link} to="/submissions">
+                        Submissions
+                    </Button>
+                )}
                 {authenticated && (
                     <Button
                         onClick={() => {

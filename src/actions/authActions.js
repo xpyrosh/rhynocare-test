@@ -39,13 +39,7 @@ export const logout = () => async (dispatch) => {
 
 // sign up new user action
 export const signup = (credentials) => async (dispatch) => {
-    const { password, confirmPassword } = credentials;
-
-    // add some validation in front end.. didn't validate in the cloud functions yet
-    if (password !== confirmPassword) {
-        return { message: "Unauthorized." };
-    }
-
+    console.log(credentials);
     try {
         setLoading();
 

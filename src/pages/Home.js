@@ -22,6 +22,7 @@ import {
 } from "@material-ui/pickers";
 import { differenceInDays, parse, addDays, format } from "date-fns";
 import { TextField } from "@material-ui/core";
+import { Redirect } from "react-router";
 
 function Copyright() {
     return (
@@ -52,7 +53,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Home = ({
-    submission: { loading, message, authenticated },
+    submission: { loading, message },
+    auth: { authenticated },
     addSubmission,
 }) => {
     // Use custom CSS
@@ -218,148 +220,160 @@ const Home = ({
     }
 
     return (
-        <Container
-            component="main"
-            maxWidth="xs"
-            style={{ paddingTop: "3rem" }}
-        >
-            <CssBaseline />
-            <div className={classes.paper}>
-                <Typography
-                    component="h1"
-                    variant="h5"
-                    className={classes.heading}
+        <>
+            {authenticated ? (
+                <Container
+                    component="main"
+                    maxWidth="xs"
+                    style={{ paddingTop: "3rem" }}
                 >
-                    Ontario COVID-19 Isolation End Date and POC Calculator
-                </Typography>
-                <form className={classes.form} onSubmit={handleSubmit}>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        {/* Patient Name Field */}
-                        <Grid
-                            className="textfield"
-                            container
-                            justify="space-around"
-                            onChange={(e) => {
-                                setPatientName(e.target.value);
+                    <CssBaseline />
+                    <div className={classes.paper}>
+                        <Typography
+                            component="h1"
+                            variant="h5"
+                            className={classes.heading}
+                        >
+                            Ontario COVID-19 Isolation End Date and POC
+                            Calculator
+                        </Typography>
+                        <form className={classes.form} onSubmit={handleSubmit}>
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                {/* Patient Name Field */}
+                                <Grid
+                                    className="textfield"
+                                    container
+                                    justify="space-around"
+                                    onChange={(e) => {
+                                        setPatientName(e.target.value);
+                                    }}
+                                >
+                                    <TextField
+                                        id="standard-basic"
+                                        label="Patient Name:"
+                                        required
+                                    />
+                                </Grid>
+                                <Grid container justify="space-around">
+                                    <KeyboardDatePicker
+                                        margin="normal"
+                                        id="date-picker-dialog"
+                                        label="Lab Collection Date"
+                                        format="dd MMM yyyy"
+                                        required
+                                        value={selectedDate}
+                                        onChange={handleDateChange}
+                                        onInput={(e) =>
+                                            setSelectedDate(e.target.value)
+                                        }
+                                        KeyboardButtonProps={{
+                                            "aria-label": "change date",
+                                        }}
+                                        // Attempted use of ReGex?
+                                        rifmFormatter={(val) =>
+                                            val.replace(
+                                                /[^\.\ \,\[a-zA-Z0-9_]*$]+/gi,
+                                                ""
+                                            )
+                                        }
+                                        refuse={/[^\.\ \,\[a-zA-Z0-9_]*$]+/gi}
+                                    />
+                                </Grid>
+                                <Grid container justify="space-around">
+                                    <KeyboardDatePicker
+                                        margin="normal"
+                                        id="date-picker-dialog2"
+                                        label="Symptom Onset Date"
+                                        format="dd MMM yyyy"
+                                        required
+                                        value={selectedDate2}
+                                        onChange={handleDateChange2}
+                                        onInput={(e) =>
+                                            setSelectedDate2(e.target.value)
+                                        }
+                                        KeyboardButtonProps={{
+                                            "aria-label": "change date",
+                                        }}
+                                        rifmFormatter={(val) =>
+                                            val.replace(
+                                                /[^\.\ \,\[a-zA-Z0-9_]*$]+/gi,
+                                                ""
+                                            )
+                                        }
+                                        refuse={/[^\.\ \,\[a-zA-Z0-9_]*$]+/gi}
+                                    />
+                                </Grid>
+
+                                <Grid className="checkboxlabel">
+                                    <Checkbox
+                                        checked={checked}
+                                        onChange={handleCheckbox}
+                                        name="checked"
+                                        inputProps={{
+                                            "aria-label": "primary checkbox",
+                                        }}
+                                    />
+                                    <span>
+                                        Symptoms present at the time of testing
+                                    </span>
+                                </Grid>
+                                <Grid className="checkboxlabel">
+                                    <Checkbox
+                                        checked={checked2}
+                                        onChange={handleCheckbox2}
+                                        name="checked2"
+                                        inputProps={{
+                                            "aria-label": "primary checkbox",
+                                        }}
+                                    />
+                                    <span>
+                                        High risk exposure 14 days before test
+                                        date
+                                    </span>
+                                </Grid>
+                                <Grid className="checkboxlabel">
+                                    <Checkbox
+                                        checked={checked3}
+                                        onChange={handleCheckbox3}
+                                        name="checked3"
+                                        inputProps={{
+                                            "aria-label": "primary checkbox",
+                                        }}
+                                    />
+                                    <span>Immunocompromised</span>
+                                </Grid>
+                            </MuiPickersUtilsProvider>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                            >
+                                SUBMIT
+                            </Button>
+                        </form>
+                        <Button
+                            type="clear"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            onClick={() => {
+                                handleClear();
                             }}
                         >
-                            <TextField
-                                id="standard-basic"
-                                label="Patient Name:"
-                                required
-                            />
-                        </Grid>
-                        <Grid container justify="space-around">
-                            <KeyboardDatePicker
-                                margin="normal"
-                                id="date-picker-dialog"
-                                label="Lab Collection Date"
-                                format="dd MMM yyyy"
-                                required
-                                value={selectedDate}
-                                onChange={handleDateChange}
-                                onInput={(e) => setSelectedDate(e.target.value)}
-                                KeyboardButtonProps={{
-                                    "aria-label": "change date",
-                                }}
-                                // Attempted use of ReGex?
-                                rifmFormatter={(val) =>
-                                    val.replace(
-                                        /[^\.\ \,\[a-zA-Z0-9_]*$]+/gi,
-                                        ""
-                                    )
-                                }
-                                refuse={/[^\.\ \,\[a-zA-Z0-9_]*$]+/gi}
-                            />
-                        </Grid>
-                        <Grid container justify="space-around">
-                            <KeyboardDatePicker
-                                margin="normal"
-                                id="date-picker-dialog2"
-                                label="Symptom Onset Date"
-                                format="dd MMM yyyy"
-                                required
-                                value={selectedDate2}
-                                onChange={handleDateChange2}
-                                onInput={(e) =>
-                                    setSelectedDate2(e.target.value)
-                                }
-                                KeyboardButtonProps={{
-                                    "aria-label": "change date",
-                                }}
-                                rifmFormatter={(val) =>
-                                    val.replace(
-                                        /[^\.\ \,\[a-zA-Z0-9_]*$]+/gi,
-                                        ""
-                                    )
-                                }
-                                refuse={/[^\.\ \,\[a-zA-Z0-9_]*$]+/gi}
-                            />
-                        </Grid>
-
-                        <Grid className="checkboxlabel">
-                            <Checkbox
-                                checked={checked}
-                                onChange={handleCheckbox}
-                                name="checked"
-                                inputProps={{
-                                    "aria-label": "primary checkbox",
-                                }}
-                            />
-                            <span>Symptoms present at the time of testing</span>
-                        </Grid>
-                        <Grid className="checkboxlabel">
-                            <Checkbox
-                                checked={checked2}
-                                onChange={handleCheckbox2}
-                                name="checked2"
-                                inputProps={{
-                                    "aria-label": "primary checkbox",
-                                }}
-                            />
-                            <span>
-                                High risk exposure 14 days before test date
-                            </span>
-                        </Grid>
-                        <Grid className="checkboxlabel">
-                            <Checkbox
-                                checked={checked3}
-                                onChange={handleCheckbox3}
-                                name="checked3"
-                                inputProps={{
-                                    "aria-label": "primary checkbox",
-                                }}
-                            />
-                            <span>Immunocompromised</span>
-                        </Grid>
-                    </MuiPickersUtilsProvider>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        SUBMIT
-                    </Button>
-                </form>
-                <Button
-                    type="clear"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                    onClick={() => {
-                        handleClear();
-                    }}
-                >
-                    CLEAR
-                </Button>
-            </div>
-            <Box mt={8}>
-                <Copyright />
-            </Box>
-        </Container>
+                            CLEAR
+                        </Button>
+                    </div>
+                    <Box mt={8}>
+                        <Copyright />
+                    </Box>
+                </Container>
+            ) : (
+                <Redirect to="/login" />
+            )}
+        </>
     );
 };
 
@@ -371,6 +385,7 @@ const mapStateToProps = (state) => ({
     // first log is the name and can be any variable
     // second log (state.log) refers to the name given in rootReducer
     submission: state.submission,
+    auth: state.auth,
 });
 
 export default connect(mapStateToProps, { addSubmission })(Home);
