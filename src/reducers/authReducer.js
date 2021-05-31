@@ -8,7 +8,7 @@ const initialState = {
     error: null,
 };
 
-export default (state = initialState, action) => {
+export const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_LOADING:
             return {

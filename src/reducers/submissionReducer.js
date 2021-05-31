@@ -8,7 +8,7 @@ const initialState = {
     message: null,
 };
 
-export default (state = initialState, action) => {
+export const submissionReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_LOADING:
             return {
